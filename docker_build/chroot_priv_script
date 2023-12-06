@@ -55,7 +55,6 @@ apt-get install -y xfce4-session
 
 sudo apt-get -y autoremove
 
-mv lightdm.conf /etc/lightdm/lightdm.conf
 mkdir -p /home/ubuntu
 addgroup ubuntu
 adduser --disabled-password --gecos "" ubuntu --ingroup ubuntu

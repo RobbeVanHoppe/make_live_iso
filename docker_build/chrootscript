@@ -1,18 +1,21 @@
 #!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
 
 echo "Start chrootscript - system level and xfce4 chroot"
 
 echo "ubuntu-fs-live" > /etc/hostname
 
 cat <<EOF > /etc/apt/sources.list
-deb http://us.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
 
-deb http://us.archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
 
-deb http://us.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://us.archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://us.archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
 EOF
 
 echo 'update and install systemv controller'
@@ -39,7 +42,6 @@ apt-get update
 apt-get install --no-install-recommends -y \
     ubuntu-standard \
     casper \
-    lupin-casper \
     discover \
     laptop-detect \
     os-prober \
