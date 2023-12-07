@@ -1,6 +1,8 @@
 # include to generate ISO
 # set ISO_DOCKER_CONTAINER to the container name
 
+_SSH_KEY=/home/$USER/.ssh/id_ed25519
+
 if docker ps -a | grep $ISO_DOCKER_CONTAINER; then
   container_id=`docker ps | tail -1 | awk '{ print $1 }'`
   echo $ISO_DOCKER_CONTAINER image is running: stop it: docker stop $container_id
@@ -16,8 +18,12 @@ fi
 #fi
 
 # Enable the SSH
-ssh-keygen -t ed25519 -C "general@kenobi.com" -N "" -f "/home/$USER/.ssh/id_ed25519"
-export SSH_PUB_KEY=/home/$USER/.ssh/id_ed25519.pub
+if [ -f "$_SSH_KEY" ]; then
+  echo "Hello there"
+else
+  ssh-keygen -t ed25519 -C "general@kenobi.com" -N "" -f "$_SSH_KEY"
+fi
+export SSH_PUB_KEY="$_SSH_KEY"
 
 
 docker run --privileged -it -d $ISO_DOCKER_CONTAINER
