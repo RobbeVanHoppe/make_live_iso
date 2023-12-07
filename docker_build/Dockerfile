@@ -6,6 +6,10 @@ FROM ubuntu:jammy
 RUN echo "APT::Acquire::Retries \"3\";" > /etc/apt/apt.conf.d/80-retries
 RUN apt-get update && apt-get -y install dosfstools zip binutils debootstrap squashfs-tools xorriso grub-pc-bin grub-efi-amd64-bin mtools network-manager
 
+# Enable the SSH
+RUN yes '' | ssh-keygen -t ed25519 -C general@kenobi.com
+RUN export SSH_PUB_KEY=/home/$USER/.ssh/id_rsa.pub
+
 # Create the chroot
 RUN mkdir /live-ubuntu-from-scratch && debootstrap --arch=amd64 --variant=minbase jammy /live-ubuntu-from-scratch/chroot http://us.archive.ubuntu.com/ubuntu/
 # RUN mount --bind /dev $HOME/live-ubuntu-from-scratch/chroot/dev && mount --bind /run $HOME/live-ubuntu-from-scratch/chroot/run
@@ -36,6 +40,7 @@ RUN chmod a+x /live-ubuntu-from-scratch/chroot/chroot_priv_script
 # Add the stubs
 ADD stubs/chroot_custom_stub /live-ubuntu-from-scratch/chroot/chroot_custom
 RUN chmod a+x /live-ubuntu-from-scratch/chroot/chroot_custom
+RUN mkdir /root/pre_custom
 ADD stubs/pre_custom_stub /root/pre_custom
 RUN chmod a+x /root/pre_custom
 ADD stubs/post_custom_stub /root/post_custom
