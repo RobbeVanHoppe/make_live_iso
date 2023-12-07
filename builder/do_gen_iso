@@ -16,8 +16,8 @@ fi
 #fi
 
 # Enable the SSH
-ssh-keygen -t ed25519 -C "general@kenobi.com" -N ""
-export SSH_PUB_KEY=/home/$USER/.ssh/id_rsa.pub
+ssh-keygen -t ed25519 -C "general@kenobi.com" -N "" -f "/home/$USER/.ssh/id_ed25519"
+export SSH_PUB_KEY=/home/$USER/.ssh/id_ed25519.pub
 
 
 docker run --privileged -it -d $ISO_DOCKER_CONTAINER
