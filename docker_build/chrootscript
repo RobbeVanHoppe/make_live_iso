@@ -24,6 +24,7 @@ apt-get update
 apt-get install --no-install-recommends -y systemd-sysv
 
 echo 'Configure (hex) machine-id and divert'
+apt-get install dbus-tests -y
 dbus-uuidgen > /etc/machine-id
 ln -fs /etc/machine-id /var/lib/dbus/machine-id
 
